@@ -41,15 +41,16 @@ function handleRegister(event) {
 
 function onGoogleSignIn(googleUser) {
     const profile = googleUser.getBasicProfile();
-    const username = profile.getName();
     const email = profile.getEmail();
+    const name = profile.getName();
 
+    // Check if the user already exists in localStorage
     if (localStorage.getItem(email)) {
         // User exists, log them in
         window.location.href = 'main.html';
     } else {
         // New user, create an account and log them in
-        const user = { username, email, password: 'google-auth' };
+        const user = { username: name, email, password: 'google-auth' };
         localStorage.setItem(email, JSON.stringify(user));
         window.location.href = 'main.html';
     }
