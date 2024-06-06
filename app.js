@@ -1,23 +1,16 @@
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Handle the Google Sign-In response
-    window.handleCredentialResponse = function(response) {
-        const data = jwt_decode(response.credential);
-        console.log(data);
-        // Here you can handle the data received from Google and proceed accordingly.
-        // Redirect to the main page or do further authentication if required.
-        window.location.href = 'main.html';
-    };
-    
-    // Handle the login form submission if present
     const loginForm = document.getElementById('loginForm');
-    
+    const registerForm = document.getElementById('registerForm');
+
     if (loginForm) {
         loginForm.addEventListener('submit', handleLogin);
     }
+
+    if (registerForm) {
+        registerForm.addEventListener('submit', handleRegister);
+    }
 });
 
-// Function to handle the login form submission
 function handleLogin(event) {
     event.preventDefault();
     const username = document.getElementById('username').value;
@@ -32,14 +25,32 @@ function handleLogin(event) {
     }
 }
 
-// Function to decode JWT tokens (JWT Decode library)
-// This function can be replaced with the jwt-decode library if you prefer
-function jwt_decode(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+function handleRegister(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-    return JSON.parse(jsonPayload);
+    if (localStorage.getItem(username)) {
+        alert('Username already exists');
+    } else {
+        const user = { username, password };
+        localStorage.setItem(username, JSON.stringify(user));
+        window.location.href = 'main.html';
+    }
+}
+
+function onGoogleSignIn(googleUser) {
+    const profile = googleUser.getBasicProfile();
+    const username = profile.getName();
+    const email = profile.getEmail();
+
+    if (localStorage.getItem(email)) {
+        // User exists, log them in
+        window.location.href = 'main.html';
+    } else {
+        // New user, create an account and log them in
+        const user = { username, email, password: 'google-auth' };
+        localStorage.setItem(email, JSON.stringify(user));
+        window.location.href = 'main.html';
+    }
 }
