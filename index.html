@@ -5,24 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="798566112744-fd1tjhkurvor7vnfuthop1bs41d4ogtq.apps.googleusercontent.com" content="content="798566112744-fd1tjhkurvor7vnfuthop1bs41d4ogtq.apps.googleusercontent.com.apps.googleusercontent.com"">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <div class="container">
         <h2>Login</h2>
-        <form id="loginForm">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Login</button>
-        </form>
-        <div class="google-login">
-            <div class="g-signin2" data-onsuccess="onGoogleSignIn"></div>
+        <div id="g_id_onload"
+             data-client_id="798566112744-fd1tjhkurvor7vnfuthop1bs41d4ogtq.apps.googleusercontent.com"
+             data-context="signin"
+             data-ux_mode="popup"
+             data-login_uri="https://joelyan00.github.io/main.html"
+             data-auto_prompt="false">
         </div>
-        <p>Don't have an account? <a href="register.html">Register here</a></p>
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="rectangular"
+             data-theme="outline"
+             data-text="sign_in_with"
+             data-size="large"
+             data-logo_alignment="left">
+        </div>
     </div>
     <script src="app.js"></script>
 </body>
 </html>
+
